@@ -1,0 +1,17 @@
+import axios from "axios";
+
+const url = "https://api.themoviedb.org/3";
+const API_KEY = import.meta.env.VITE_API_KEY;
+
+// TRENDING
+
+export const fetchTrending = async (timeWindow = "day") => {
+  try {
+    const res = await axios.get(
+      `${url}/trending/all/${timeWindow}?api_key=${API_KEY}`
+    );
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
