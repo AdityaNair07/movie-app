@@ -7,10 +7,10 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const fetchTrending = async (timeWindow = "day") => {
   try {
-    const res = await axios.get(
+    const { data } = await axios.get(
       `${url}/trending/all/${timeWindow}?api_key=${API_KEY}`
     );
-    return res;
+    return data.results;
   } catch (error) {
     console.error(error);
   }
