@@ -2,6 +2,7 @@ import axios from "axios";
 
 const url = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_API_KEY;
+export const imagePath = "https://image.tmdb.org/t/p/w300/";
 
 // TRENDING
 
