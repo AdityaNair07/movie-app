@@ -1,11 +1,11 @@
 import { StarIcon } from "@chakra-ui/icons";
 import { Badge, Box, Flex, Image } from "@chakra-ui/react";
-import { imagePath } from "../services/api";
+import { imagePath, url } from "../services/api";
 import { Link } from "react-router-dom";
 
-const Card = ({ data }) => {
+const Card = ({ data, type }) => {
   return (
-    <Link to={"/"}>
+    <Link to={`/${type}/${data.id}`}>
       <Flex
         borderWidth="1px"
         borderRadius="lg"
@@ -76,12 +76,13 @@ const Card = ({ data }) => {
           </Box>
 
           <Box>
-            {data?.media_type === "movie"
-              ? data?.release_date
-              : data?.first_air_date}
+            {new Date(
+              data?.release_date || data?.first_air_date
+            ).getFullYear() || "N/A"}
           </Box>
 
-          <Box display="flex" mt="2" aligndatas="center">
+          <Box display="flex" mt="2" alignItems={"center"} gap={2}>
+            <StarIcon />
             <Badge
               fontSize={"md"}
               borderRadius="full"
