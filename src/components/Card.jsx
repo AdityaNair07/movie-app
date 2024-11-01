@@ -89,7 +89,7 @@ const Card = ({ data, type }) => {
               px="2"
               colorScheme={data?.vote_average >= 5 ? "green" : "red"}
             >
-              {data?.vote_average}
+              {data.vote_average.toFixed(1)}
             </Badge>
           </Box>
         </Box>
