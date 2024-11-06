@@ -14,7 +14,7 @@ export const fetchTrending = async (timeWindow = "day") => {
     );
     return data.results;
   } catch (error) {
-    console.error(error);
+    console.error("Error while fetching trending data: ", error);
   }
 };
 
@@ -25,7 +25,7 @@ export const fetchDetails = async (type, id) => {
     const res = await axios.get(`${url}/${type}/${id}?api_key=${API_KEY}`);
     return res.data;
   } catch (error) {
-    console.error(error);
+    console.error("Error while fetching details: ", error);
   }
 };
 
@@ -38,6 +38,18 @@ export const fetchCredits = async (type, id) => {
     );
     return res.data;
   } catch (error) {
-    console.error(error);
+    console.error("Error while fetching credits: ", error);
+  }
+};
+
+// get videos
+export const fetchVideos = async (type, id) => {
+  try {
+    const res = await axios.get(
+      `${url}/${type}/${id}/videos?api_key=${API_KEY}`
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Error while fetching videos: ", error);
   }
 };
