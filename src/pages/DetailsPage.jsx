@@ -8,9 +8,6 @@ import {
   imagePathOriginal,
 } from "../services/api";
 import {
-  AspectRatio,
-  Avatar,
-  AvatarGroup,
   Badge,
   Box,
   Button,
@@ -20,12 +17,13 @@ import {
   Flex,
   Heading,
   Image,
-  Skeleton,
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, SmallAddIcon, StarIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { ratingColor, ratingToPercentage } from "../utils/helpers";
+import VideoComponent from "../components/VideoComponent";
+import "../assets/styles.css";
 
 const DetailsPage = () => {
   const { type, id } = useParams();
@@ -34,6 +32,8 @@ const DetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [watchlistStatus, setWatchlistStatus] = useState(false);
   const [videoData, setVideoData] = useState();
+  const [trailer, setTrailer] = useState();
+  const [notTrailer, setNotTrailer] = useState();
 
   useEffect(() => {
     setLoading(true);
@@ -67,6 +67,18 @@ const DetailsPage = () => {
         setVideoData(videoData.results);
         console.log("credits ", creditsData);
         console.log("video data ", videoData);
+
+        const trailer = videoData.results.find(
+          (result) => result.type == "Trailer"
+        );
+        setTrailer(trailer);
+
+        const notTrailer = videoData.results
+          .filter((result) => result.type !== "Trailer")
+          .slice(0, 10);
+        setNotTrailer(notTrailer);
+
+        console.log(trailer, notTrailer, "videos");
       } catch (error) {
         console.log("error: ", error);
       } finally {
@@ -83,8 +95,6 @@ const DetailsPage = () => {
       </Flex>
     );
   }
-
-  const trailer = videoData.filter((result) => result.type == "Trailer");
 
   return (
     <Box>
@@ -184,7 +194,6 @@ const DetailsPage = () => {
               <Flex
                 alignItems={"center"}
                 gap={3}
-                mb={7}
                 justifyContent={{ base: "center", md: "flex-start" }}
               >
                 {data.genres.map((item) => {
@@ -251,18 +260,43 @@ const DetailsPage = () => {
         </Flex>
       </Container>
       <Container maxW={"container.xl"} pb={10}>
-        <AspectRatio
-          width={"full"}
-          ratio={16 / 9}
-          border={"1px solid red"}
-          borderRadius={5}
-          overflow={"hidden"}
+        <Heading
+          textTransform={"uppercase"}
+          fontSize={"3xl"}
+          fontWeight={"semibold"}
+          my={5}
+          textAlign={{ base: "center", md: "start" }}
         >
-          <iframe
-            src={`https://www.youtube.com/embed/${trailer[0].key}`}
-            allowFullScreen
-          />
-        </AspectRatio>
+          Videos
+        </Heading>
+        <VideoComponent id={trailer.key} />
+
+        {notTrailer.length != 0 && (
+          <Flex
+            alignItems={"start"}
+            gap={5}
+            my={10}
+            overflowX={"scroll"}
+            className="scrollbar-container"
+            maxW={"100%"}
+          >
+            {notTrailer.map((video) => {
+              return (
+                <Box key={video.id}>
+                  <VideoComponent small id={video.key} />
+                  <Text
+                    fontWeight={"semibold"}
+                    noOfLines={2}
+                    fontSize={"xl"}
+                    p={2}
+                  >
+                    {video.name}
+                  </Text>
+                </Box>
+              );
+            })}
+          </Flex>
+        )}
       </Container>
     </Box>
   );
