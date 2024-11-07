@@ -8,7 +8,7 @@ import {
   Skeleton,
 } from "@chakra-ui/react";
 import { fetchTrending } from "../services/api";
-import Card from "../components/Card";
+import CardComponent from "../components/CardComponent";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -26,7 +26,7 @@ const Home = () => {
   console.log("data: ", data);
 
   return (
-    <Container maxW={"container.xl"}>
+    <Container maxW={"container.xl"} pb={10}>
       <Flex alignItems={"center"} mb={10}>
         <Heading as="h2" fontSize={"md"} textTransform={"uppercase"}>
           Trending
@@ -77,7 +77,7 @@ const Home = () => {
           return loading ? (
             <Skeleton key={i} height={300} />
           ) : (
-            <Card key={item?.id} data={item} type={item.media_type} />
+            <CardComponent key={item?.id} data={item} type={item.media_type} />
           );
         })}
       </Grid>

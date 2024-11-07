@@ -1,11 +1,12 @@
 import { StarIcon } from "@chakra-ui/icons";
 import { Badge, Box, Flex, Image } from "@chakra-ui/react";
-import { imagePath, url } from "../services/api";
+import { imagePath } from "../services/api";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const Card = ({ data, type }) => {
+const CardComponent = ({ data, type }) => {
   return (
-    <Link to={`/${type}/${data.id}`}>
+    <Link to={`/${type}/${data?.id}`}>
       <Flex
         borderWidth="1px"
         borderRadius="lg"
@@ -27,10 +28,11 @@ const Card = ({ data, type }) => {
         <Image
           src={imagePath + data?.poster_path}
           alt={data?.name}
-          objectFit={"contain"}
+          objectFit={"cover"}
           bgPosition={"center"}
           // maxH={300}
           width={"100%"}
+          fallbackSrc="https://placehold.co/300x450"
         />
 
         <Box
@@ -53,7 +55,7 @@ const Card = ({ data, type }) => {
               colorScheme="teal"
               fontSize={"md"}
             >
-              {data?.media_type}
+              {type}
             </Badge>
             {data?.adult == true ? (
               <Badge borderRadius="full" px="2" colorScheme="orange">
@@ -72,7 +74,7 @@ const Card = ({ data, type }) => {
             noOfLines={1}
             fontSize={"xl"}
           >
-            {data?.media_type === "movie" ? data?.title : data?.name}
+            {type === "movie" ? data?.title : data?.name}
           </Box>
 
           <Box>
@@ -89,7 +91,7 @@ const Card = ({ data, type }) => {
               px="2"
               colorScheme={data?.vote_average >= 5 ? "green" : "red"}
             >
-              {data.vote_average.toFixed(1)}
+              {data?.vote_average?.toFixed(1)}
             </Badge>
           </Box>
         </Box>
@@ -98,4 +100,9 @@ const Card = ({ data, type }) => {
   );
 };
 
-export default Card;
+CardComponent.propTypes = {
+  data: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
+};
+
+export default CardComponent;

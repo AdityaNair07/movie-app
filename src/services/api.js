@@ -53,3 +53,41 @@ export const fetchVideos = async (type, id) => {
     console.error("Error while fetching videos: ", error);
   }
 };
+
+// fetch movies
+export const fetchMovies = async (page, sortBy) => {
+  try {
+    const res = await axios.get(
+      `${url}/discover/movie?page=${page}&sort_by=${sortBy}&api_key=${API_KEY}`
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching movies: ", error);
+  }
+};
+
+// fetch tv series
+export const fetchShows = async (page, sortBy) => {
+  try {
+    const res = await axios.get(
+      `${url}/discover/tv?page=${page}&sort_by=${sortBy}&api_key=${API_KEY}`
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching tv series: ", error);
+  }
+};
+
+// search
+export const searchQuery = async (query, page) => {
+  try {
+    const res = await axios.get(
+      `${url}/search/multi?page=${page}&query=${query}&api_key=${API_KEY}`
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Error while searching: ", error);
+  }
+};

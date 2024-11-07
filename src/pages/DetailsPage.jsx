@@ -20,8 +20,12 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, SmallAddIcon } from "@chakra-ui/icons";
-import { ratingColor, ratingToPercentage } from "../utils/helpers";
+import { CheckCircleIcon, SmallAddIcon, TimeIcon } from "@chakra-ui/icons";
+import {
+  minutesToHours,
+  ratingColor,
+  ratingToPercentage,
+} from "../utils/helpers";
 import VideoComponent from "../components/VideoComponent";
 import "../assets/styles.css";
 
@@ -68,12 +72,12 @@ const DetailsPage = () => {
         console.log("credits ", creditsData);
         console.log("video data ", videoData);
 
-        const trailer = videoData.results.find(
+        const trailer = videoData?.results.find(
           (result) => result.type == "Trailer"
         );
         setTrailer(trailer);
 
-        const notTrailer = videoData.results
+        const notTrailer = videoData?.results
           .filter((result) => result.type !== "Trailer")
           .slice(0, 10);
         setNotTrailer(notTrailer);
@@ -102,7 +106,7 @@ const DetailsPage = () => {
         display={"flex"}
         alignItems={"center"}
         w={"100%"}
-        background={`linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.8)), url(${imagePathOriginal}/${data.backdrop_path})`}
+        background={`linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.8)), url(${imagePathOriginal}/${data?.backdrop_path})`}
         backgroundRepeat={"no-repeat"}
         backgroundSize={"cover"}
         backgroundPosition={"center"}
@@ -112,7 +116,7 @@ const DetailsPage = () => {
         <Container maxW={"container.xl"}>
           <Flex flexDirection={{ base: "column", md: "row" }}>
             <Image
-              src={`${imagePath}/${data.poster_path}`}
+              src={`${imagePath}/${data?.poster_path}`}
               borderRadius={10}
               w={{ base: "-webkit-fit-content", md: "400px" }}
               marginX={"auto"}
@@ -124,16 +128,32 @@ const DetailsPage = () => {
                 mb={2}
                 textAlign={{ base: "center", md: "start" }}
               >
-                {type == "movie" ? data.title : data.name}
+                {type == "movie" ? data?.title : data?.name}
               </Text>
-              <Text
-                fontWeight={"semibold"}
-                fontSize={"2xl"}
-                mb={2}
-                textAlign={{ base: "center", md: "start" }}
+              <Flex
+                flexDirection={{ base: "column", md: "row" }}
+                alignItems={"center"}
+                gap={5}
+                mb={4}
               >
-                {type == "movie" ? data.release_date : data.first_air_date}
-              </Text>
+                <Text
+                  fontWeight={"semibold"}
+                  fontSize={"2xl"}
+                  textAlign={{ base: "center", md: "start" }}
+                >
+                  {type == "movie" ? data?.release_date : data?.first_air_date}
+                </Text>
+                {data?.runtime && (
+                  <Flex
+                    alignItems={"center"}
+                    fontSize={"lg"}
+                    fontWeight={"semibold"}
+                  >
+                    <TimeIcon mr={2} />
+                    <Text>{minutesToHours(data?.runtime)}</Text>
+                  </Flex>
+                )}
+              </Flex>
               <Flex
                 flexDirection={{ base: "column", md: "row" }}
                 alignItems={"center"}
@@ -145,11 +165,11 @@ const DetailsPage = () => {
                   <CircularProgress
                     thickness={10}
                     size={20}
-                    value={ratingToPercentage(data.vote_average)}
-                    color={ratingColor(data.vote_average)}
+                    value={ratingToPercentage(data?.vote_average)}
+                    color={ratingColor(data?.vote_average)}
                   >
                     <CircularProgressLabel color={"white"} fontSize={"xl"}>
-                      {ratingToPercentage(data.vote_average)}%
+                      {ratingToPercentage(data?.vote_average)}%
                     </CircularProgressLabel>
                   </CircularProgress>
                   <Text
@@ -179,8 +199,8 @@ const DetailsPage = () => {
                 textAlign={{ base: "center", md: "start" }}
                 fontStyle={"italic"}
               >
-                {type == "movie" && data.tagline && (
-                  <>&rsquo;{data.tagline}&rsquo;</>
+                {type == "movie" && data?.tagline && (
+                  <>&rsquo;{data?.tagline}&rsquo;</>
                 )}
               </Text>
               <Text
@@ -189,14 +209,14 @@ const DetailsPage = () => {
                 mb={7}
                 textAlign={{ base: "center", md: "start" }}
               >
-                {data.overview}
+                {data?.overview}
               </Text>
               <Flex
                 alignItems={"center"}
                 gap={3}
                 justifyContent={{ base: "center", md: "flex-start" }}
               >
-                {data.genres.map((item) => {
+                {data?.genres.map((item) => {
                   return (
                     <Badge
                       fontSize={"md"}
@@ -224,40 +244,47 @@ const DetailsPage = () => {
         >
           Cast
         </Heading>
-        <Flex
-          alignItems={"start"}
-          gap={7}
-          justifyContent={{ base: "center", md: "flex-start" }}
-          flexWrap={"wrap"}
-        >
-          {creditsData?.cast.slice(0, 6).map((cast) => {
-            return (
-              <Box
-                display={"flex"}
-                key={cast.id}
-                flexDirection={"column"}
-                textAlign={"center"}
-                justifyContent={"center"}
-                alignItems={"center"}
-                gap={5}
-              >
-                <Image
-                  width={140}
-                  borderRadius={5}
-                  src={imagePath + cast.profile_path}
-                  fallbackSrc="https://placehold.co/140x210"
-                />
-                <Text
+        {creditsData.cast.length !== 0 ? (
+          <Flex
+            alignItems={"start"}
+            gap={7}
+            justifyContent={{ base: "center", md: "flex-start" }}
+            flexWrap={"wrap"}
+          >
+            {creditsData?.cast.slice(0, 6).map((cast) => {
+              return (
+                <Box
+                  display={"flex"}
+                  key={cast.id}
+                  flexDirection={"column"}
                   textAlign={"center"}
-                  fontSize={"md"}
-                  fontWeight={"semibold"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  gap={5}
                 >
-                  {cast.name}
-                </Text>
-              </Box>
-            );
-          })}
-        </Flex>
+                  <Image
+                    width={140}
+                    borderRadius={5}
+                    src={imagePath + cast.profile_path}
+                    fallbackSrc="https://placehold.co/140x210"
+                    objectFit={"cover"}
+                  />
+                  <Text
+                    textAlign={"center"}
+                    fontSize={"md"}
+                    fontWeight={"semibold"}
+                  >
+                    {cast.name}
+                  </Text>
+                </Box>
+              );
+            })}
+          </Flex>
+        ) : (
+          <Text fontWeight={"semibold"} fontSize={"lg"}>
+            No data available
+          </Text>
+        )}
       </Container>
       <Container maxW={"container.xl"} pb={10}>
         <Heading
@@ -269,20 +296,26 @@ const DetailsPage = () => {
         >
           Videos
         </Heading>
-        <VideoComponent id={trailer.key} />
+        {trailer ? (
+          <VideoComponent id={trailer?.key} />
+        ) : (
+          <Text fontWeight={"semibold"} fontSize={"lg"}>
+            No data available
+          </Text>
+        )}
 
         {notTrailer.length != 0 && (
           <Flex
             alignItems={"start"}
             gap={5}
             my={10}
-            overflowX={"scroll"}
+            overflowX={"auto"}
             className="scrollbar-container"
             maxW={"100%"}
           >
-            {notTrailer.map((video) => {
+            {notTrailer?.map((video) => {
               return (
-                <Box key={video.id}>
+                <Box key={video.id} maxW={300}>
                   <VideoComponent small id={video.key} />
                   <Text
                     fontWeight={"semibold"}
