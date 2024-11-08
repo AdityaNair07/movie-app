@@ -4,7 +4,6 @@ import {
   Grid,
   Heading,
   Input,
-  InputGroup,
   Skeleton,
   Spinner,
 } from "@chakra-ui/react";
@@ -98,6 +97,7 @@ const Search = () => {
             );
           })}
       </Grid>
+
       {/* pagination  */}
       {results.length > 0 && !loading && (
         <PaginationComponent
