@@ -19,6 +19,7 @@ import {
   Image,
   Spinner,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, SmallAddIcon, TimeIcon } from "@chakra-ui/icons";
 import {
@@ -28,6 +29,7 @@ import {
 } from "../utils/helpers";
 import VideoComponent from "../components/VideoComponent";
 import "../assets/styles.css";
+import { useAuth } from "../context/useAuth";
 
 const DetailsPage = () => {
   const { type, id } = useParams();
@@ -38,6 +40,9 @@ const DetailsPage = () => {
   const [videoData, setVideoData] = useState();
   const [trailer, setTrailer] = useState();
   const [notTrailer, setNotTrailer] = useState();
+
+  const { user } = useAuth();
+  const toast = useToast();
 
   useEffect(() => {
     setLoading(true);
@@ -91,6 +96,32 @@ const DetailsPage = () => {
     };
     fetchData();
   }, [type, id]);
+
+  const handleAddToWatchList = async () => {
+    if (!user) {
+      toast({
+        title: "Login to add to watchlist",
+        variant: "solid",
+        isClosable: true,
+        status: "error",
+      });
+      return;
+    }
+
+    const watchlistData = {
+      id: data?.id,
+      title: data?.title || data?.name,
+      type: type,
+      poster_path: data?.poster_path,
+      release_date: data?.release_date || data?.first_air_date,
+      vote_average: data?.vote_average,
+      overview: data?.overview,
+    };
+
+    console.log(watchlistData, "watchlist data");
+
+    setWatchlistStatus(!watchlistStatus);
+  };
 
   if (loading) {
     return (
@@ -181,13 +212,14 @@ const DetailsPage = () => {
                   </Text>
                 </Box>
                 <Button
+                  // isDisabled={!user}
                   size={"lg"}
                   colorScheme={watchlistStatus ? "green" : "gray"}
                   variant={"solid"}
                   leftIcon={
                     watchlistStatus ? <CheckCircleIcon /> : <SmallAddIcon />
                   }
-                  onClick={() => setWatchlistStatus(!watchlistStatus)}
+                  onClick={() => handleAddToWatchList()}
                 >
                   {watchlistStatus ? "In Watchlist" : "Add to watchlist"}
                 </Button>
