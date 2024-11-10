@@ -6,11 +6,10 @@ import {
   setDoc,
   doc,
   getDoc,
-  updateDoc,
-  deleteField,
   deleteDoc,
   getDocs,
 } from "firebase/firestore";
+import { useCallback } from "react";
 
 export const useFirestore = () => {
   const toast = useToast();
@@ -101,7 +100,7 @@ export const useFirestore = () => {
     }
   };
 
-  const getWatchlist = async (userId) => {
+  const getWatchlist = useCallback(async (userId) => {
     const querySnapShot = await getDocs(
       collection(db, "users", userId.toString(), "watchlist")
     );
@@ -109,7 +108,7 @@ export const useFirestore = () => {
     const data = querySnapShot.docs.map((doc) => ({ ...doc.data() }));
 
     return data;
-  };
+  }, []);
 
   return {
     addDocument,

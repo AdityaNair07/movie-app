@@ -176,8 +176,8 @@ const DetailsPage = () => {
             <Image
               src={`${imagePath}/${data?.poster_path}`}
               borderRadius={10}
-              w={{ base: "-webkit-fit-content", md: "400px" }}
-              marginX={"auto"}
+              w={{ base: "-webkit-max-content", md: "300px" }}
+              marginX={{ base: "auto", md: "0" }}
             />
             <Box p={3} ml={3}>
               <Text
@@ -277,7 +277,7 @@ const DetailsPage = () => {
                 mb={7}
                 textAlign={{ base: "center", md: "start" }}
               >
-                {data?.overview}
+                {data?.overview ? data?.overview : "No overview data available"}
               </Text>
               <Flex
                 alignItems={"center"}

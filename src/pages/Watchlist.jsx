@@ -1,8 +1,15 @@
-import { Container, Flex, Grid, Heading, Skeleton } from "@chakra-ui/react";
+import {
+  Container,
+  Flex,
+  Grid,
+  Heading,
+  Skeleton,
+  Spinner,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useFirestore } from "../services/firestore";
 import { useAuth } from "../context/useAuth";
-import CardComponent from "../components/CardComponent";
+import WatchlistCardComponent from "../components/WatchlistCardComponent";
 
 const Watchlist = () => {
   const [loading, setLoading] = useState(true);
@@ -28,23 +35,39 @@ const Watchlist = () => {
           Watchlist
         </Heading>
       </Flex>
-      {/* <Grid
-        templateColumns={{
-          base: "1fr",
-          sm: "repeat(2,1fr)",
-          md: "repeat(3,1fr)",
-          lg: "repeat(4,1fr)",
-        }}
-        gap={5}
-      >
-        {watchlist?.map((item, i) => {
-          return loading ? (
-            <Skeleton key={i} height={300} />
-          ) : (
-            <CardComponent key={item?.id} data={item} type={item.media_type} />
-          );
-        })}
-      </Grid> */}
+      {loading && (
+        <Flex justifyContent={"center"} alignItems={"center"} mt={10}>
+          <Spinner size={"xl"} color="teal" />
+        </Flex>
+      )}
+      {!loading && watchlist?.length === 0 && (
+        <Flex justifyContent={"center"} alignItems={"center"} mt={10}>
+          <Heading as="h2" fontSize={"md"} textTransform={"uppercase"}>
+            No item in the watchlist
+          </Heading>
+        </Flex>
+      )}
+      {!loading && watchlist?.length > 0 && (
+        <Grid
+          templateColumns={{
+            base: "1fr",
+          }}
+          gap={5}
+        >
+          {watchlist?.map((item, i) => {
+            return loading ? (
+              <Skeleton key={i} height={300} />
+            ) : (
+              <WatchlistCardComponent
+                key={item?.id}
+                item={item}
+                type={item?.type}
+                setWatchlist={setWatchlist}
+              />
+            );
+          })}
+        </Grid>
+      )}
     </Container>
   );
 };
