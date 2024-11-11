@@ -31,7 +31,7 @@ MovieGeek is a dynamic movie and TV show application that lets users discover tr
 
 ## Demo
 
-Check out a live demo of [MovieGeek](https://movie-flex-07.vercel.app/).
+Check out a live demo of [MovieGeek](https://movie-geek-07.vercel.app/).
 
 ---
 
