@@ -1,6 +1,6 @@
-# MovieFlex 🎬
+# MovieGeek 🎬
 
-MovieFlex is a dynamic movie and TV show application that lets users discover trending content, view detailed information, and manage their own watchlist. Built with Chakra UI for a responsive and modern interface, MovieFlex uses the TMDB API to fetch up-to-date data on the latest movies and shows.
+MovieGeek is a dynamic movie and TV show application that lets users discover trending content, view detailed information, and manage their own watchlist. Built with Chakra UI for a responsive and modern interface, MovieGeek uses the TMDB API to fetch up-to-date data on the latest movies and shows.
 
 ---
 
@@ -31,13 +31,13 @@ MovieFlex is a dynamic movie and TV show application that lets users discover tr
 
 ## Demo
 
-Check out a live demo of [MovieFlex](https://movie-flex-07.vercel.app/).
+Check out a live demo of [MovieGeek](https://movie-flex-07.vercel.app/).
 
 ---
 
 ## Installation
 
-To set up MovieFlex locally, follow these steps:
+To set up MovieGeek locally, follow these steps:
 
 1. **Clone the repository**:
 
@@ -118,13 +118,13 @@ To set up MovieFlex locally, follow these steps:
 
 ## API Reference
 
-MovieFlex uses the [TMDB API](https://www.themoviedb.org/documentation/api) to fetch movie and show data. Refer to TMDB's API documentation for more details on the endpoints and parameters.
+MovieGeek uses the [TMDB API](https://www.themoviedb.org/documentation/api) to fetch movie and show data. Refer to TMDB's API documentation for more details on the endpoints and parameters.
 
 ---
 
 ## Contributing
 
-Contributions are welcomed! If you'd like to improve MovieFlex, please follow these steps:
+Contributions are welcomed! If you'd like to improve MovieGeek, please follow these steps:
 
 1. Fork the repository.
 2. Create a feature branch: `git checkout -b feature/YourFeature`.
