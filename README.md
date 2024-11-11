@@ -86,23 +86,26 @@ To set up MovieGeek locally, follow these steps:
 
 ## Screenshots
 
-![Home Page](image-1.png)
 *Home page showing trending movies*
+![Home Page](image-9.png)
 
-![Details Page](image-3.png)
 *Details page with cast and trailer*
+![Details Page](image-10.png)
 
-![Movies Page](image-4.png)
 *Movies page showcasing movies*
+![Movies Page](image-11.png)
 
-![Shows Page](image-5.png)
 *Shows page showcasing shows*
+![Shows Page](image-12.png)
 
-![Search Page](image-7.png)
 *Search page showcasing searched items*
+![Search Page](image-13.png)
 
-![Watchlist Page](image-8.png)
 *Watchlist page showcasing saved items*
+![Watchlist Page](image-14.png)
+
+*Responsive view of the application*
+![Responsive View - Watchlist page](image-15.png) ![Responsive View - Drawer](image-16.png)
 
 ---
 
