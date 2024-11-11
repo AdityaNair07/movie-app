@@ -50,7 +50,7 @@ const Navbar = () => {
               letterSpacing={"wide"}
               color={"teal.300"}
             >
-              MovieFlex
+              MovieGeek
             </Box>
           </Link>
           <Flex
